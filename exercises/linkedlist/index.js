@@ -111,7 +111,6 @@ class LinkedList {
 
         while (node) {
             if (counter === n) {
-
                 return node
             }
             counter++;
@@ -131,27 +130,64 @@ class LinkedList {
             return
         }
 
-        // if (this.size() - 1 < n) {
-        //     return
-        // }
-
-        let counter = 1;
-        let prev = this.head
-        let node = this.head.next
-        while (node) {
-            if (counter === n) {
-                prev.next = node.next
-                return
-            }
-            prev = node
-            node = node.next
-            counter++
+        let prev = this.getAt(n - 1)
+        if (!prev.next) {
+            return
         }
-        return null;
+        prev.next = prev.next.next;
+
+        // let counter = 1;
+        // let prev = this.head
+        // let node = this.head.next
+        // while (node) {
+        //     if (counter === n) {
+        //         prev.next = node.next
+        //         return
+        //     }
+        //     prev = node
+        //     node = node.next
+        //     counter++
+        // }
+        // return null;
     }
 
     insertAt(data, n) {
+        if (!this.head) {
+            this.head = new Node(data)
+        }
 
+        if (n === 0) {
+            this.head = new Node(data, this.head)
+            return
+        }
+
+        let size = this.size()
+        if (size - 1 <= n) {
+            this.insertLast(data)
+            return
+        }
+
+        let prev = this.getAt(n - 1)
+
+        let next = prev.next
+        prev.next = new Node(data, next)
+
+    }
+
+    forEach(fun) {
+        let node = this.head
+        while (node) {
+            fun(node)
+            node = node.next
+        }
+    }
+
+    *[Symbol.iterator]() {
+        let node = this.head
+        while (node) {
+            yield node
+            node = node.next
+        }
     }
 }
 

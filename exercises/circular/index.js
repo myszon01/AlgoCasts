@@ -16,13 +16,13 @@ function circular(list) {
     let slow = list.head
     let fast = list.head
 
-    while(fast.next && fast.next.next && fast.next !== slow.next){
+    while(fast.next && fast.next.next){
         slow = slow.next
         fast = fast.next.next
-    }
 
-    if(fast.next.next.next !== null && fast.next === slow.next){
-        return true
+        if(slow === fast){
+            return true
+        }
     }
 
     return false
